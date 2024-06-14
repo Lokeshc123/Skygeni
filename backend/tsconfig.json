@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                         // Specify ECMAScript target version (ES6)
+    "module": "NodeNext",                    // Module system to use
+    "baseUrl": "src",                        // Base directory to resolve non-relative module names
+    "outDir": "dist",                        // Directory to output
+    "sourceMap": true,                       // Generates corresponding .map file
+    "noImplicitAny": true,                   // Raise error on expressions and declarations with an implied 'any' type
+    "strict": true,                          // Enable all strict type-checking options
+    "esModuleInterop": true,                 // Emit __importStar and __importDefault helpers
+    "skipLibCheck": true,                    // Skip type checking of all declaration files
+    "forceConsistentCasingInFileNames": true // Disallow inconsistently-cased references to the same file
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
