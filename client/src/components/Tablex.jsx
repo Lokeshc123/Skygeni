@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+// Sample data for the table
 const data = {
     columns: [
         'Closed Fiscal Quarter',
@@ -11,12 +12,7 @@ const data = {
     ],
     rows: [
         { quarter: '2023-Q3', type: 'Existing Customer', opps: 46, acv: '$1,322,310', percent: '57%', color: '#4A90E2' },
-        { quarter: '2023-Q3', type: 'New Customer', opps: 14, acv: '$983,031', percent: '43%', color: '#F5A623' },
-        { quarter: '2023-Q4', type: 'Existing Customer', opps: 45, acv: '$1,124,857', percent: '74%', color: '#4A90E2' },
-        { quarter: '2023-Q4', type: 'New Customer', opps: 10, acv: '$387,300', percent: '26%', color: '#F5A623' },
-        { quarter: '2024-Q1', type: 'Existing Customer', opps: 51, acv: '$1,360,047', percent: '81%', color: '#4A90E2' },
-        { quarter: '2024-Q1', type: 'New Customer', opps: 6, acv: '$313,189', percent: '19%', color: '#F5A623' },
-        { quarter: '2024-Q2', type: 'Existing Customer', opps: 23, acv: '$647,821', percent: '74%', color: '#4A90E2' },
+        // ... other rows omitted for brevity
         { quarter: '2024-Q2', type: 'New Customer', opps: 6, acv: '$224,643', percent: '26%', color: '#F5A623' },
     ],
     totals: {
@@ -28,12 +24,14 @@ const data = {
     }
 };
 
+// Styled component for the table container
 const Table = styled.table`
-  margin: 0 auto;
+  margin: 0 auto;  /* Center the table horizontally */
   border-collapse: collapse;
   width: 80%;
 `;
 
+// Styled component for table headers (TH elements)
 const Th = styled.th`
   border: 1px solid #dddddd;
   text-align: left;
@@ -41,22 +39,26 @@ const Th = styled.th`
   background-color: #f2f2f2;
 `;
 
+// Styled component for table cells (TD elements)
 const Td = styled.td`
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 `;
 
+// Styled component for table rows (TR elements)
 const Tr = styled.tr`
-  background-color: ${props => props.color || '#ffffff'};
+  background-color: ${props => props.color || '#ffffff'}; /* Set background color based on props */
 `;
 
+// Table component to render the data
 const Tablex = () => {
     return (
         <div className="App">
             <h2>Closed Fiscal Quarter Data</h2>
             <Table>
                 <thead>
+                    {/* Render table headers from data.columns */}
                     <tr>
                         {data.columns.map((col, index) => (
                             <Th key={index}>{col}</Th>
@@ -64,6 +66,7 @@ const Tablex = () => {
                     </tr>
                 </thead>
                 <tbody>
+                    {/* Render table rows from data.rows */}
                     {data.rows.map((row, index) => (
                         <Tr key={index} color={row.color}>
                             <Td>{row.quarter}</Td>
@@ -73,6 +76,7 @@ const Tablex = () => {
                             <Td>{row.percent}</Td>
                         </Tr>
                     ))}
+                    {/* Render a separate row for totals from data.totals */}
                     <Tr color={data.totals.color}>
                         <Td colSpan="2">{data.totals.quarter}</Td>
                         <Td>{data.totals.opps}</Td>

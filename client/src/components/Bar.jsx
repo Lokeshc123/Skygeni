@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 const StackedBarChart = ({ data }) => {
-    const svgRef = useRef();
+    const svgRef = useRef();  // Reference to the SVG element
 
     useEffect(() => {
         // Setting up the SVG element dimensions and margins
@@ -10,6 +10,7 @@ const StackedBarChart = ({ data }) => {
             width = 800 - margin.left - margin.right,
             height = 400 - margin.top - margin.bottom;
 
+        // Selecting the SVG element and setting its dimensions
         const svg = d3
             .select(svgRef.current)
             .attr('width', width + margin.left + margin.right)
@@ -30,6 +31,7 @@ const StackedBarChart = ({ data }) => {
             .nice()
             .range([height, 0]);
 
+        // Define colors for each stack category
         const colors = {
             ExistingCustomer: '#1f77b4', // Blue
             NewCustomer: '#ff7f0e' // Orange
@@ -38,7 +40,7 @@ const StackedBarChart = ({ data }) => {
         // Define the stack generator
         const stack = d3.stack().keys(['ExistingCustomer', 'NewCustomer']);
 
-        // Append the bars
+        // Append the layers (groups for each stack)
         const layer = svg
             .selectAll('.layer')
             .data(stack(data))
@@ -47,6 +49,7 @@ const StackedBarChart = ({ data }) => {
             .attr('class', 'layer')
             .attr('fill', (d) => colors[d.key]);
 
+        // Append the bars within each layer
         layer
             .selectAll('rect')
             .data((d) => d)
@@ -69,7 +72,7 @@ const StackedBarChart = ({ data }) => {
             .attr('class', 'y-axis')
             .call(d3.axisLeft(y).tickFormat(d3.format(".2s")));
 
-        // Adding the text labels for the values and percentages on each stack
+        // Adding text labels for values and percentages on each stack
         layer
             .selectAll('text')
             .data((d) => d)
@@ -82,6 +85,7 @@ const StackedBarChart = ({ data }) => {
             .each(function (d) {
                 const value = d[1] - d[0];
                 const percentage = (value / d.data.total) * 100;
+                // Displaying the value and percentage as text
                 d3.select(this).append('tspan')
                     .attr('x', x(d.data.closed_fiscal_quarter) + x.bandwidth() / 2)
                     .attr('dy', '0em')
@@ -93,7 +97,7 @@ const StackedBarChart = ({ data }) => {
             })
             .style('fill', 'white');  // Optional: change the text color for better contrast
 
-        // Adding the total labels on top of each bar
+        // Adding total labels on top of each bar
         svg.selectAll('.total')
             .data(data)
             .enter()
@@ -105,9 +109,9 @@ const StackedBarChart = ({ data }) => {
             .text((d) => d3.format(".2s")(d.total))
             .style('fill', 'black');  // Optional: change the text color for better contrast
 
-    }, [data]);
+    }, [data]);  // Trigger useEffect when data changes
 
-    return <svg ref={svgRef}></svg>;
+    return <svg ref={svgRef}></svg>;  // Render the SVG element
 };
 
 export default StackedBarChart;
